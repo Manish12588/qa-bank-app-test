@@ -50,3 +50,11 @@ export async function getBalance(
   expect(account, `account ${accountId} not found`).toBeDefined();
   return account.balance;
 }
+
+export async function getAccountById(
+  apiHelper: ApiHelper,
+  accountId: number,
+): Promise<Account | undefined> {
+  const res = await getAccounts(apiHelper);
+  return res.body.find((a: Account) => a.id === accountId);
+}
