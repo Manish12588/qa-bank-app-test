@@ -39,3 +39,14 @@ export async function openSavingsAccounts(
     expect(res.status, `setup: savings account #${i}`).toBe(201);
   }
 }
+
+export async function getBalance(
+  apiHelper: ApiHelper,
+  accountId: number,
+): Promise<number> {
+  const res = await getAccounts(apiHelper);
+  expect(res.status).toBe(200);
+  const account = res.body.find((a: Account) => a.id === accountId);
+  expect(account, `account ${accountId} not found`).toBeDefined();
+  return account.balance;
+}
