@@ -29,3 +29,19 @@ export async function setupCustomerWithSavings(apiHelper: ApiHelper) {
     savingsId: savings.body.id as number, // starting balances: checking 900, savings 100
   };
 }
+
+export async function transferMany(
+  apiHelper: ApiHelper,
+  fromAccountId: number,
+  toAccountId: number,
+  amounts: number[],
+): Promise<void> {
+  for (const amount of amounts) {
+    const res = await transferFund(apiHelper, {
+      fromAccountId,
+      toAccountId,
+      amount,
+    });
+    expect(res.status).toBe(200);
+  }
+}
