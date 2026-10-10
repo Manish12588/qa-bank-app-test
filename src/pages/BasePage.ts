@@ -5,9 +5,19 @@ export class BasePage {
   protected readonly page: Page;
 
   //Common locators accross all pages
+  private readonly features: Locator;
+  private readonly login: Locator;
+  private readonly getStarted: Locator;
 
   constructor(page: Page) {
     this.page = page;
+    this.features = page.getByRole("link", { name: "Features" });
+    this.login = page.getByRole("link", { name: "Log In" });
+    this.getStarted = page.getByRole("link", { name: "Get started" });
+  }
+
+  async navigateTo(pageURL: string): Promise<void> {
+    await this.page.goto(pageURL);
   }
 
   //Page level generic methods
