@@ -39,4 +39,16 @@ export class BasePage {
       path: `reports/screenshots/${name}.png`,
     });
   }
+
+  async getPageHeader(pageName: string): Promise<string> {
+    return await this.page
+      .getByRole("heading", { name: `${pageName}` })
+      .innerText();
+  }
+  async navigateToPageFromSideBar(pageName: string) {
+    await this.page.locator("//a[text()='" + pageName + "']").click();
+    await this.page
+      .getByRole("heading", { name: `${pageName}` })
+      .waitFor({ state: "visible" });
+  }
 }

@@ -5,7 +5,6 @@ import {
   loginCustomer,
 } from "../../src/api/Auth";
 import { test, expect } from "../../src/fixtures/PageFixtures";
-import { AccountsPage } from "../../src/pages/AccountsPage";
 import { RegisterResult } from "../../src/pages/AuthPage";
 
 let registeredUser: RegisterResult;

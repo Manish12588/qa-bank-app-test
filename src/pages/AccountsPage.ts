@@ -61,7 +61,7 @@ export class AccountsPage extends BasePage {
     return accounts;
   }
 
-  async openNewAccounts(): Promise<string> {
+  async openNewAccounts(): Promise<number> {
     const before = await this.accountRows.count();
     await this.openNewAccount.click();
     await this.openNewAccountButton.click();
@@ -69,6 +69,6 @@ export class AccountsPage extends BasePage {
     let newSavingAccountId = await this.newAccountId.innerText();
     await this.accountsOverview.click();
     await expect(this.accountRows).toHaveCount(before + 1);
-    return newSavingAccountId;
+    return parseInt(newSavingAccountId);
   }
 }
