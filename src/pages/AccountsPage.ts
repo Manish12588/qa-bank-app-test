@@ -62,6 +62,7 @@ export class AccountsPage extends BasePage {
   }
 
   async openNewAccounts(): Promise<number> {
+    await this.accountRows.first().waitFor();
     const before = await this.accountRows.count();
     await this.openNewAccount.click();
     await this.openNewAccountButton.click();
