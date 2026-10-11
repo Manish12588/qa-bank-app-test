@@ -8,6 +8,7 @@ import { AuthPage } from "../pages/AuthPage";
 import { LoginPage } from "../pages/LoginPage";
 import { AccountsPage } from "../pages/AccountsPage";
 import { TransferPage } from "../pages/TransferPage";
+import { BillPayPage } from "../pages/BillPayPage";
 
 type pageFixtures = {
   basePage: BasePage;
@@ -15,6 +16,7 @@ type pageFixtures = {
   loginPage: LoginPage;
   accountsPage: AccountsPage;
   transferPage: TransferPage;
+  billPayPage: BillPayPage;
 };
 
 //Extends the playwright test
@@ -38,6 +40,10 @@ export const test = baseTest.extend<pageFixtures>({
   transferPage: async ({ page }, use) => {
     const transferPage = new TransferPage(page);
     use(transferPage); //default: what exactly you wanted to give it to test
+  },
+  billPayPage: async ({ page }, use) => {
+    const billPayPage = new BillPayPage(page);
+    use(billPayPage); //default: what exactly you wanted to give it to test
   },
 });
 
