@@ -1,5 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
 import dotenv from "dotenv";
+import reportingLabs from "./reporting-labs.config";
 
 //If no environment provided it will run qa enviromnment by default
 const ENV = process.env.ENV || "qa";
@@ -20,7 +21,18 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: "html",
+  reporter: process.env.CI
+    ? //pipeline
+      [
+        ["html", { outputFolder: "reports/html-report", open: "never" }],
+        ["reporting-labs", reportingLabs],
+      ]
+    : //Local
+      [
+        ["list"],
+        ["html", { outputFolder: "reports/html-report", open: "never" }],
+        ["reporting-labs", reportingLabs],
+      ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
@@ -34,8 +46,8 @@ export default defineConfig({
   projects: [
     { name: "api", testDir: "./tests/api" },
     {
-      name: "ui",
-      testDir: "./tests/ui",
+      name: "web",
+      testDir: "./tests/web",
       use: {
         ...devices["Desktop Chrome"],
         baseURL: process.env.WEB_BASE_URL,
