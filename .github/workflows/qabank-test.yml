@@ -13,6 +13,9 @@ on:
           - STAGE
           - DEV
 
+permissions:
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -20,8 +23,19 @@ jobs:
     environment: ${{ github.event.inputs.environment || 'QA' }}
 
     steps:
-      - name: Checkout code
+      - name: Checkout tests
         uses: actions/checkout@v4
+
+      # The app under test lives in its own repo. Check it out next to the tests.
+      - name: Checkout QABank app
+        uses: actions/checkout@v4
+        with:
+          repository: Manish12588/qa-bank-app # change to your app repo name
+          path: qabank
+          # private repo? add:  token: ${{ secrets.QABANK_REPO_TOKEN }}
+
+      - name: Start QABank and wait until healthy
+        run: docker compose -f qabank/docker-compose.yml up -d --build --wait
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -50,18 +64,30 @@ jobs:
       # reportingLabs run history: powers the Trend chart, new vs known
       # failures, flaky dots and "got slower". One history per environment.
       - name: Restore reportingLabs history
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: reporting-labs.history.json
           key: reporting-labs-history-${{ github.event.inputs.environment || 'QA' }}-${{ github.run_id }}
           restore-keys: reporting-labs-history-${{ github.event.inputs.environment || 'QA' }}-
 
       - name: Run tests
-        run: npx playwright test --project=chromium
+        run: npx playwright test
         env:
           ENV: ${{ github.event.inputs.environment || 'QA' }}
-          API_BASE_URL: ${{ variables.API_BASE_URL }}
-          WEB_BASE_URL: ${{ variables.WEB_BASE_URL }}
+          API_BASE_URL: ${{ vars.API_BASE_URL }}
+          WEB_BASE_URL: ${{ vars.WEB_BASE_URL }}
+
+      # Saved even when tests fail, so failed runs stay in the trend history.
+      - name: Save reportingLabs history
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: reporting-labs.history.json
+          key: reporting-labs-history-${{ github.event.inputs.environment || 'QA' }}-${{ github.run_id }}
+
+      - name: QABank logs
+        if: failure()
+        run: docker compose -f qabank/docker-compose.yml logs
 
       - name: Upload HTML Report
         if: always()
