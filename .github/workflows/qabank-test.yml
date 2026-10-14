@@ -1,4 +1,4 @@
-name: QA Bank Test
+name: QABank - Test
 
 on:
   workflow_dispatch:
@@ -23,24 +23,20 @@ jobs:
     environment: ${{ github.event.inputs.environment || 'QA' }}
 
     steps:
-      - name: Checkout tests
-        uses: actions/checkout@v4
-
       # The app under test lives in its own repo. Check it out next to the tests.
       - name: Checkout QABank app
         uses: actions/checkout@v4
         with:
-          repository: Manish12588/qa-bank-app # change to your app repo name
+          repository: Manish12588/qa-bank-app
           path: qabank
-
-      - name: Show files
-        run: |
-          pwd
-          ls -la
-          ls -la qabank
 
       - name: Start QABank and wait until healthy
         run: docker compose -f qabank/docker-compose.yml up -d --build --wait
+
+      - name: Checkout QABank app tests
+        uses: actions/checkout@v4
+        with:
+          repository: Manish12588/qa-bank-app-test
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
