@@ -31,7 +31,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: Manish12588/qa-bank-app # change to your app repo name
-          path: qabank
 
       - name: Start QABank and wait until healthy
         run: docker compose -f qabank/docker-compose.yml up -d --build --wait
