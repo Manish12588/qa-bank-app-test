@@ -32,6 +32,12 @@ jobs:
         with:
           repository: Manish12588/qa-bank-app # change to your app repo name
 
+      - name: Show files
+        run: |
+          pwd
+          ls -la
+          ls -la qabank
+
       - name: Start QABank and wait until healthy
         run: docker compose -f qabank/docker-compose.yml up -d --build --wait
 
