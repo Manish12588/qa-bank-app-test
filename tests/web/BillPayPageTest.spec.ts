@@ -22,7 +22,7 @@ test.beforeEach(async ({ basePage, authPage, accountsPage, loginPage }) => {
 });
 
 test(
-  "WEB-BILL-01: pays a bill from checkings",
+  "WEB-BILL-01: pays a bill from checking",
   {
     annotation: {
       type: "description",
