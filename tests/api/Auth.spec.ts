@@ -12,6 +12,7 @@ import {
 test(
   "AUTH-01 creates customer with funded checking account",
   {
+    tag: "@smoke",
     annotation: {
       type: "description",
       description:
@@ -73,6 +74,7 @@ test(
 test(
   "AUTH-04: logs in with valid credentials",
   {
+    tag: "@smoke",
     annotation: {
       type: "description",
       description:

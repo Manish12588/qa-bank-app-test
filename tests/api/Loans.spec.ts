@@ -17,6 +17,7 @@ test.beforeEach(async ({ apiHelper }) => {
 test(
   "LOAN-01 approves loan from checking",
   {
+    tag: "@smoke",
     annotation: {
       type: "description",
       description: `Down payment 90, amount 900 (exactly 10 x). Returns approved: true, a LOAN account appears, and checking drops 900 → 810.`,
@@ -87,6 +88,7 @@ test(
 test(
   "LOAN-03 denies loan above the limit",
   {
+    tag: "@smoke",
     annotation: {
       type: "description",
       description: `Down payment 100, amount 1000.01 (one cent over 10 x). Returns approved: false, no LOAN account, and the balance is unchanged.`,

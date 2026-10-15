@@ -58,6 +58,7 @@ test(
 test(
   "WEB-AUTH-04: logs in with valid credentials",
   {
+    tag: "@smoke",
     annotation: {
       type: "description",
       description: `A customer registered through the API logs in through the form and lands on the dashboard.`,

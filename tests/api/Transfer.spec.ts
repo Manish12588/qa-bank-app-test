@@ -13,6 +13,7 @@ test.beforeEach(async ({ apiHelper }) => {
 test(
   "TRF-01 moves money between own accounts",
   {
+    tag: "@smoke",
     annotation: {
       type: "description",
       description: `A valid POST /api/transfers from checking to savings returns success. 
@@ -41,6 +42,7 @@ test(
 test(
   "TRF-02 rejects overdraft",
   {
+    tag: "@smoke",
     annotation: {
       type: "description",
       description: `Transferring more than the source balance returns 400. Both balances are unchanged afterwards (verified by a second GET /api/accounts).`,

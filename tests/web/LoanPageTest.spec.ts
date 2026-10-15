@@ -24,6 +24,7 @@ test.beforeEach(async ({ basePage, authPage, accountsPage, loginPage }) => {
 test(
   "WEB-LOAN-01: approved loan shows loan account",
   {
+    tag: "@smoke",
     annotation: {
       type: "description",
       description: `Down payment 90, amount 900. An approval message appears, a LOAN account is listed, and checking shows 810.`,

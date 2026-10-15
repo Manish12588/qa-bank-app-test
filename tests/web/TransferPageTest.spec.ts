@@ -24,6 +24,7 @@ test.beforeEach(async ({ basePage, authPage, accountsPage, loginPage }) => {
 test(
   "WEB-TRF-01: transfers between own accounts",
   {
+    tag: "@smoke",
     annotation: {
       type: "description",
       description: `Transfer 50 from checking to savings. A success message appears, and the dashboard shows 850 and 150.`,

@@ -20,6 +20,7 @@ test.beforeEach(async ({ basePage, authPage }) => {
 test(
   "WEB-ACC-01: dashboard shows funded checking account",
   {
+    tag: "@smoke",
     annotation: {
       type: "description",
       description: `A new customer sees exactly one checking account with balance 1000.00.`,
