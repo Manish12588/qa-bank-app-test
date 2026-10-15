@@ -84,13 +84,13 @@ A loan is approved when `amount <= downPayment * 10` and the source account can 
 
 ## UI tests
 
-Files in `tests/ui/`. UI tests check journeys and what the screen shows. The rules at their boundaries are covered in the API tests above. Where a test needs several records or an API session, it uses the API helpers for setup.
+Files in `tests/web/`. UI tests check journeys and what the screen shows. The rules at their boundaries are covered in the API tests above. Where a test needs several records or an API session, it uses the API helpers for setup.
 
 ### UI Authentication
 
 | ID          | Test                                   | Description                                                                                                                                                                        |
 | ----------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| WEB-AUTH-01 | registers and shows success            | A valid registration shows the success message and the user is logged in.                                                                                                          |
+| WEB-AUTH-01 | registers and lands on dashboard       | Fill the register form with valid data. The user lands on the dashboard, which shows one checking account with 1000. Drives the form, no API setup.                                |
 | WEB-AUTH-02 | shows error for missing required field | Submitting with a required field blank is blocked by the browser's validation. The blank field is identified, and no customer can log in with that username (checked via the API). |
 | WEB-AUTH-03 | shows error for duplicate username     | A customer created via the API, then registered again through the form with the same username, shows the duplicate-username message.                                               |
 | WEB-AUTH-04 | logs in with valid credentials         | Logging in with a registered customer's credentials opens the logged-in area.                                                                                                      |
